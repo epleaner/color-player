@@ -10,15 +10,15 @@ let video;
 let tracker;
 
 let scales = {
-  cMajor: ['C4', 'D4', 'E4', 'F4', 'G4', 'A4'],
-  gMajor: ['G4', 'A4', 'B4', 'C5', 'D5', 'E5'], // Starting from G note
-  dMajor: ['D4', 'E4', 'F#4', 'G4', 'A4', 'B4'], // Includes F# instead of F
-  aMinor: ['A4', 'B4', 'C5', 'D5', 'E5', 'F5'], // A minor scale
-  eMinor: ['E4', 'F#4', 'G4', 'A4', 'B4', 'C5'], // E minor scale
-  fMajor: ['F4', 'G4', 'A4', 'Bb4', 'C5', 'D5'], // Includes Bb instead of B
+  'C Major': ['C4', 'D4', 'E4', 'F4', 'G4', 'A4'],
+  'G Major': ['G4', 'A4', 'B4', 'C5', 'D5', 'E5'], // Starting from G note
+  'D Minor': ['D4', 'E4', 'F#4', 'G4', 'A4', 'B4'], // Includes F# instead of F
+  'A Minor': ['A4', 'B4', 'C5', 'D5', 'E5', 'F5'], // A minor scale
+  'E Minor': ['E4', 'F#4', 'G4', 'A4', 'B4', 'C5'], // E minor scale
+  'F Major': ['F4', 'G4', 'A4', 'Bb4', 'C5', 'D5'], // Includes Bb instead of B
 };
 
-let scale = scales['cMajor'];
+let scale = scales['C Major'];
 
 let shouldPlayRed = false;
 let isPlayingRed = false;
@@ -96,15 +96,17 @@ function getColorName(rgb) {
   return `rgba(${rgb.join(',')})`;
 }
 
-function setup() {
-  createCanvas(windowWidth, windowHeight);
+function addDom() {
+  const dom = document.createElement('div');
 
-  noStroke();
+  dom.id = 'dom';
+
+  const info = document.createElement('p');
+  info.innerHTML = 'Use your camera to make music with colors.';
+
+  dom.appendChild(info);
 
   const dropdown = document.createElement('select');
-  dropdown.style.position = 'fixed';
-  dropdown.style.right = 0;
-  dropdown.style.top = 0;
 
   for (const scaleName in scales) {
     const option = document.createElement('option');
@@ -117,7 +119,17 @@ function setup() {
     scale = scales[this.value];
   });
 
-  document.body.appendChild(dropdown);
+  dom.appendChild(dropdown);
+
+  document.body.appendChild(dom);
+}
+
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+
+  noStroke();
+
+  addDom();
 
   video = createCapture(VIDEO);
   video.id('video');
