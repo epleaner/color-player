@@ -165,9 +165,11 @@ function setup() {
 
 function draw() {
   background(255, 255, 255, 200);
-  // image(video, 0, 0);
+
+  if (keyIsDown(86)) image(video, 0, 0);
 
   if (keyIsDown(32)) {
+    console.log('space');
     if (keyIsDown(LEFT_ARROW)) {
       const note = getNote(colors[0]);
       if (!colors[0].isPlaying) {
