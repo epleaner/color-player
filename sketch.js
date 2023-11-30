@@ -65,7 +65,7 @@ let colors = [
     isPlaying: false,
     note: 'C3',
     threshold: function (r, g, b) {
-      return r < 90 && g < 90 && b > 130;
+      return r < 115 && g < 150 && b > 130;
     },
   },
   {
@@ -83,10 +83,12 @@ const reverb = new Tone.JCReverb(0.4).toDestination();
 const synth = new Tone.PolySynth(Tone.AMSynth).chain(reverb);
 
 synth.set({
-  oscillator: {
-    type: 'sine',
+  volume: -6,
+  envelope: {
+    attack: 1,
+    decay: 100,
+    release: 100,
   },
-  volume: 5,
 });
 
 function getNote(c) {
@@ -168,7 +170,6 @@ function draw() {
   background(255, 255, 255, 200);
 
   image(video, 0, 0);
-  console.log('ok');
 
   if (keyIsDown(LEFT_ARROW)) {
     console.log('left');
