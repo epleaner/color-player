@@ -79,7 +79,8 @@ let colors = [
   },
 ];
 
-const synth = new Tone.PolySynth(Tone.MonoSynth).toDestination();
+const reverb = new Tone.JCReverb(0.4).toDestination();
+const synth = new Tone.PolySynth(Tone.AMSynth).chain(reverb);
 
 synth.set({
   oscillator: {
@@ -166,39 +167,38 @@ function setup() {
 function draw() {
   background(255, 255, 255, 200);
 
-  if (keyIsDown(86)) image(video, 0, 0);
+  image(video, 0, 0);
+  console.log('ok');
 
-  if (keyIsDown(32)) {
-    console.log('space');
-    if (keyIsDown(LEFT_ARROW)) {
-      const note = getNote(colors[0]);
-      if (!colors[0].isPlaying) {
-        synth.triggerAttack(note);
-        colors[0].isPlaying = true;
-      } else {
-        synth.triggerRelease(note);
-        colors[0].isPlaying = false;
-      }
+  if (keyIsDown(LEFT_ARROW)) {
+    console.log('left');
+    const note = getNote(colors[0]);
+    if (!colors[0].isPlaying) {
+      synth.triggerAttack(note);
+      colors[0].isPlaying = true;
+    } else {
+      synth.triggerRelease(note);
+      colors[0].isPlaying = false;
     }
-    if (keyIsDown(RIGHT_ARROW)) {
-      const note = getNote(colors[1]);
-      if (!colors[1].isPlaying) {
-        synth.triggerAttack(note);
-        colors[1].isPlaying = true;
-      } else {
-        synth.triggerRelease(note);
-        colors[1].isPlaying = false;
-      }
+  }
+  if (keyIsDown(RIGHT_ARROW)) {
+    const note = getNote(colors[1]);
+    if (!colors[1].isPlaying) {
+      synth.triggerAttack(note);
+      colors[1].isPlaying = true;
+    } else {
+      synth.triggerRelease(note);
+      colors[1].isPlaying = false;
     }
-    if (keyIsDown(UP_ARROW)) {
-      const note = getNote(colors[2]);
-      if (!colors[2].isPlaying) {
-        synth.triggerAttack(note);
-        colors[2].isPlaying = true;
-      } else {
-        synth.triggerRelease(note);
-        colors[2].isPlaying = false;
-      }
+  }
+  if (keyIsDown(UP_ARROW)) {
+    const note = getNote(colors[2]);
+    if (!colors[2].isPlaying) {
+      synth.triggerAttack(note);
+      colors[2].isPlaying = true;
+    } else {
+      synth.triggerRelease(note);
+      colors[2].isPlaying = false;
     }
   }
 
